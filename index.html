@@ -330,36 +330,144 @@
   }
 
     /* ---------- Skills ---------- */
-  .skills-grid{ display:grid; grid-template-columns:1fr 1fr; gap:40px 60px; }
-  .skill-item{ margin-bottom:26px; }
-  .skill-item:last-child{ margin-bottom:0; }
-  .skill-item-head{ display:flex; justify-content:space-between; font-size:14.5px; margin-bottom:10px; }
-  .skill-item-head span:first-child{ font-weight:600; }
-  .skill-item-head span:last-child{ color:var(--secondary); font-family:'Fira Code',monospace; font-size:13px; }
-  .skill-track{ height:8px; border-radius:999px; background:rgba(255,255,255,.06); overflow:hidden; }
-  .skill-fill{
-    height:100%; border-radius:999px;
-    background:linear-gradient(90deg, var(--primary), var(--accent));
-    width:0%;
-    transition:width 1.4s var(--ease);
-    box-shadow:0 0 14px 0 rgba(159,227,197,.0);
+    :root {
+    --cream: #fdf6ec;
+    --peach-1: #ffe9c7;
+    --ink: #14120f;
+    --muted: #6b6459;
+    --line: #e7ddcb;
+    --accent: #f2994a;
   }
-  .skill-item:hover .skill-fill{ box-shadow:0 0 16px 0 rgba(159,227,197,.55); }
 
-  .tools-panel{ padding:32px; border-radius:var(--radius-lg); }
-  .tools-panel h3{ font-size:20px; margin-bottom:18px; }
-  .tool-row{ display:flex; align-items:center; gap:14px; padding:14px 0; border-bottom:1px solid var(--border); }
-  .tool-row:last-child{ border-bottom:none; }
-  .tool-icon{
-    width:42px; height:42px; border-radius:12px;
-    display:flex; align-items:center; justify-content:center;
-    background:linear-gradient(135deg, var(--primary), var(--secondary));
-    font-weight:800; font-size:14px; flex-shrink:0;
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: var(--ink);
+    background: var(--cream);
+    padding: 60px 24px;
   }
-  .tool-row div p{ margin:0; font-size:14px; font-weight:600; }
-  .tool-row div span{ font-size:12.5px; color:var(--muted); }
 
-  @media (max-width:900px){ .skills-grid{ grid-template-columns:1fr; } }
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    font-size: 32px;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin: 0 0 10px;
+  }
+
+  .section-sub {
+    color: var(--muted);
+    font-size: 15px;
+    margin: 0 0 32px;
+    max-width: 480px;
+  }
+
+  /* Tabs */
+  .skills-tabs {
+    display: inline-flex;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 4px;
+    margin-bottom: 32px;
+  }
+
+  .tab-btn {
+    border: none;
+    background: transparent;
+    padding: 10px 24px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    transition: background 0.25s ease, color 0.25s ease;
+  }
+
+  .tab-btn.active {
+    background: var(--ink);
+    color: #fff;
+  }
+
+  /* Grid */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .skill-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 26px;
+    display: none;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+
+  .skill-card.visible {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .skill-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+
+  .skill-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: var(--peach-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .skill-icon svg { width: 22px; height: 22px; }
+
+  .skill-name { font-size: 17px; font-weight: 700; }
+  .skill-category { font-size: 12.5px; color: var(--muted); }
+
+  .skill-bar-track {
+    height: 8px;
+    background: var(--line);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .skill-bar-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent), #f6c453);
+    transition: width 1.1s ease;
+  }
+
+  .skill-level {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12.5px;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  @media (max-width: 600px) {
+    .skills-grid { grid-template-columns: 1fr; }
+  }
 
   /* ---------- Experience ---------- */
   .timeline{ position:relative; max-width:760px; }
@@ -710,58 +818,131 @@
          =============================================================== -->
 
     <!-- SKILLS -->
-  <section id="skills">
-    <div class="container">
-      <div class="section-head reveal">
-        <span class="eyebrow-label">Skills</span>
-        <h2>The toolkit behind every dashboard</h2>
-        <p>A focused stack, used deeply rather than broadly — built around the Power BI ecosystem end to end.</p>
-      </div>
-      <div class="skills-grid">
-        <div class="reveal">
-          <div class="skill-item" data-level="95">
-            <div class="skill-item-head"><span>Power Query</span><span>95%</span></div>
-            <div class="skill-track"><div class="skill-fill"></div></div>
-          </div>
-          <div class="skill-item" data-level="92">
-            <div class="skill-item-head"><span>DAX</span><span>92%</span></div>
-            <div class="skill-track"><div class="skill-fill"></div></div>
-          </div>
-          <div class="skill-item" data-level="90">
-            <div class="skill-item-head"><span>Data Modeling</span><span>90%</span></div>
-            <div class="skill-track"><div class="skill-fill"></div></div>
-          </div>
-          <div class="skill-item" data-level="94">
-            <div class="skill-item-head"><span>Data Visualization</span><span>94%</span></div>
-            <div class="skill-track"><div class="skill-fill"></div></div>
-          </div>
-          <div class="skill-item" data-level="85">
-            <div class="skill-item-head"><span>SQL</span><span>85%</span></div>
-            <div class="skill-track"><div class="skill-fill"></div></div>
-          </div>
+  <div class="wrap">
+
+  <h2 class="section-title">Skills</h2>
+  <p class="section-sub">A mix of core analytical skills and the tools I use to apply them.</p>
+
+  <div class="skills-tabs" role="tablist">
+    <button class="tab-btn active" data-filter="all" role="tab">All</button>
+    <button class="tab-btn" data-filter="core" role="tab">Core</button>
+    <button class="tab-btn" data-filter="tools" role="tab">Tools</button>
+  </div>
+
+  <div class="skills-grid" id="skillsGrid">
+
+    <article class="skill-card visible" data-category="core" data-level="92">
+      <div class="skill-head">
+        <div class="skill-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#c9601a" stroke-width="1.8">
+            <ellipse cx="12" cy="5" rx="8" ry="3"/>
+            <path d="M4 5v6c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/>
+            <path d="M4 11v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/>
+          </svg>
         </div>
-        <div class="tools-panel glass reveal">
-          <h3>Primary Tool</h3>
-          <div class="tool-row">
-            <div class="tool-icon">BI</div>
-            <div><p>Microsoft Power BI Desktop</p><span>Report authoring, modeling & publishing</span></div>
-          </div>
-          <div class="tool-row">
-            <div class="tool-icon">PQ</div>
-            <div><p>Power Query Editor</p><span>ETL, shaping & transforming source data</span></div>
-          </div>
-          <div class="tool-row">
-            <div class="tool-icon">DX</div>
-            <div><p>DAX</p><span>Calculated measures & business logic</span></div>
-          </div>
-          <div class="tool-row">
-            <div class="tool-icon">DB</div>
-            <div><p>SQL</p><span>Querying & preparing relational data</span></div>
-          </div>
+        <div>
+          <div class="skill-name">SQL</div>
+          <div class="skill-category">Core skill</div>
         </div>
       </div>
-    </div>
-  </section>
+      <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+      <div class="skill-level"><span>Querying & joins</span><span class="skill-percent">92%</span></div>
+    </article>
+
+    <article class="skill-card visible" data-category="core" data-level="88">
+      <div class="skill-head">
+        <div class="skill-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#c9601a" stroke-width="1.8">
+            <path d="M4 4v16h16"/>
+            <path d="M8 15l3-4 3 3 4-6"/>
+          </svg>
+        </div>
+        <div>
+          <div class="skill-name">Data Visualization</div>
+          <div class="skill-category">Core skill</div>
+        </div>
+      </div>
+      <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+      <div class="skill-level"><span>Charts & storytelling</span><span class="skill-percent">88%</span></div>
+    </article>
+
+    <article class="skill-card visible" data-category="core" data-level="85">
+      <div class="skill-head">
+        <div class="skill-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#c9601a" stroke-width="1.8">
+            <path d="M5 5h14l-5 7v6l-4 2v-8z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="skill-name">Data Cleaning</div>
+          <div class="skill-category">Core skill</div>
+        </div>
+      </div>
+      <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+      <div class="skill-level"><span>Validation & transforms</span><span class="skill-percent">85%</span></div>
+    </article>
+
+    <article class="skill-card visible" data-category="tools" data-level="90">
+      <div class="skill-head">
+        <div class="skill-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#c9601a" stroke-width="1.8">
+            <rect x="4" y="10" width="3.5" height="10"/>
+            <rect x="10.5" y="6" width="3.5" height="14"/>
+            <rect x="17" y="3" width="3.5" height="17"/>
+          </svg>
+        </div>
+        <div>
+          <div class="skill-name">Power BI</div>
+          <div class="skill-category">Tool</div>
+        </div>
+      </div>
+      <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
+      <div class="skill-level"><span>Dashboards & reports</span><span class="skill-percent">90%</span></div>
+    </article>
+
+  </div>
+</div>
+
+<script>
+  const cards = document.querySelectorAll('.skill-card');
+
+  // Animate bars into view on load/scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const fill = entry.target.querySelector('.skill-bar-fill');
+        const level = entry.target.getAttribute('data-level');
+        fill.style.width = level + '%';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  cards.forEach(card => observer.observe(card));
+
+  // Category filter tabs
+  const tabs = document.querySelectorAll('.tab-btn');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const filter = tab.getAttribute('data-filter');
+
+      cards.forEach(card => {
+        const match = filter === 'all' || card.getAttribute('data-category') === filter;
+        card.classList.toggle('visible', match);
+        if (match) {
+          const fill = card.querySelector('.skill-bar-fill');
+          const level = card.getAttribute('data-level');
+          fill.style.width = '0%';
+          requestAnimationFrame(() => {
+            setTimeout(() => { fill.style.width = level + '%'; }, 30);
+          });
+        }
+      });
+    });
+  });
+</script>
 
     <!-- ===============================================================
          CONTACT SECTION
