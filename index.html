@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revathi | Power BI Developer</title>
+
+<!--
+=========================================================================
+  WELCOME! This file is built so you can customise your whole site
+  by just editing text between HTML tags — no coding knowledge needed.
+
+  Every place you might want to change has a comment right above it
+  that starts with "EDIT THIS:" — just search for that phrase
+  (Ctrl+F / Cmd+F in your code editor) to jump between the spots.
+
+  The file is organised top to bottom like this:
+    1. Fonts & Icons (CDN links — don't need to touch these)
+    2. CSS styles (all in one <style> block)
+    3. Sidebar (name, title, nav, socials)
+    4. Header bar (logo + socials)
+    5. Banner section (your bio)
+    6. Projects section (the 3-column card grid)
+    7. Contact section
+    8. Footer
+    9. JavaScript (small bits for mobile menu + smooth scroll)
+=========================================================================
+-->
+
+<!-- Google Fonts: Source Sans 3 (body text) + Source Serif 4 (headings) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome (for the social + UI icons) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+  /* =====================================================================
+     DESIGN TOKENS
+     EDIT THIS: change the accent colour here and it updates everywhere
+     on the site automatically (buttons, links, highlights, icons).
+     ===================================================================== */
+  :root{
+    --accent: #5D9C9A;       /* main accent colour */
+    --accent-dark: #497e7c;  /* a darker shade, used for hover states */
+    --ink: #2b2f30;          /* main text colour (near-black) */
+    --ink-soft: #63696b;     /* secondary/muted text colour */
+    --paper: #ffffff;        /* main background colour */
+    --paper-alt: #f7f8f8;    /* slightly-off-white background for alternating sections */
+    --line: #e6e8e8;         /* border / divider colour */
+    --sidebar-w: 300px;      /* width of the fixed left sidebar on desktop */
+    --header-h: 64px;        /* height of the top header bar */
+  }
+
+  *{ box-sizing: border-box; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4{
+    font-family: 'Source Serif 4', serif;
+    color: var(--ink);
+    line-height: 1.2;
+    margin: 0 0 0.5em 0;
+  }
+
+  a{ color: var(--accent); text-decoration: none; }
+  a:hover{ color: var(--accent-dark); }
+
+  img{ max-width: 100%; display: block; }
+
+  /* Visible keyboard focus for accessibility */
+  a:focus-visible, button:focus-visible{
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  /* ---------------------------------------------------------------------
+     LAYOUT SHELL
+     The page has three fixed/sticky pieces (sidebar + header) and one
+     scrolling column (main). On mobile the sidebar collapses into a
+     slide-out menu triggered by a hamburger button in the header.
+     --------------------------------------------------------------------- */
+
+  /* ===== SIDEBAR (left, fixed) ===== */
+  #sidebar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--sidebar-w);
+    height: 100%;
+    background: var(--ink);
+    color: #d9dcdc;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 3em 2em;
+    z-index: 100;
+    transition: transform 0.3s ease;
+  }
+
+  #sidebar .id-block h1{
+    color: #fff;
+    font-size: 1.7em;
+    margin-bottom: 0.15em;
+  }
+
+  /* EDIT THIS: this is where your job title's colour comes from —
+     it uses the --accent variable set at the top of the CSS. */
+  #sidebar .id-block p.role{
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.95em;
+    letter-spacing: 0.02em;
+    margin: 0;
+  }
+
+  #sidebar nav{ margin-top: 2.5em; }
+  #sidebar nav ul{ list-style: none; margin: 0; padding: 0; }
+  #sidebar nav li{ margin-bottom: 0.9em; }
+  #sidebar nav a{
+    color: #d9dcdc;
+    font-weight: 600;
+    font-size: 0.95em;
+    position: relative;
+    padding-bottom: 2px;
+    border-bottom: 2px solid transparent;
+  }
+  #sidebar nav a:hover,
+  #sidebar nav a.active{
+    color: #fff;
+    border-bottom-color: var(--accent);
+  }
+
+  #sidebar .socials{
+    display: flex;
+    gap: 1em;
+  }
+  #sidebar .socials a{
+    color: #d9dcdc;
+    font-size: 1.15em;
+    width: 38px;
+    height: 38px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #sidebar .socials a:hover{
+    color: #fff;
+    border-color: var(--accent);
+    background: var(--accent);
+  }
+
+  /* Close button, only shown on mobile inside the sidebar */
+  #sidebar-close{
+    display: none;
+    background: none;
+    border: none;
+    color: #d9dcdc;
+    font-size: 1.4em;
+    position: absolute;
+    top: 1.2em;
+    right: 1.2em;
+    cursor: pointer;
+  }
+
+  /* ===== MAIN WRAPPER (everything except the sidebar) ===== */
+  #main-wrapper{
+    margin-left: var(--sidebar-w);
+    min-height: 100%;
+  }
+
+  /* ===== TOP HEADER BAR ===== */
+  #topbar{
+    position: sticky;
+    top: 0;
+    height: var(--header-h);
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5em;
+    z-index: 90;
+  }
+
+  #topbar .logo{
+    font-family: 'Source Serif 4', serif;
+    font-weight: 700;
+    font-size: 1.2em;
+    color: var(--ink);
+  }
+  #topbar .logo span{ color: var(--accent); }
+
+  #topbar .socials{ display: flex; gap: 1.1em; }
+  #topbar .socials a{ color: var(--ink-soft); font-size: 1.05em; }
+  #topbar .socials a:hover{ color: var(--accent); }
+
+  /* Hamburger button — only visible on small screens */
+  #menu-toggle{
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.3em;
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  /* ===== GENERIC SECTION SPACING ===== */
+  section{
+    padding: 5.5em 3em;
+    max-width: 1100px;
+  }
+  section.alt-bg{ background: var(--paper-alt); }
+
+  /* ===== BANNER (bio) ===== */
+  #banner{
+    padding-top: 6.5em;
+  }
+  #banner .banner-inner{
+    max-width: 640px;
+  }
+  #banner .eyebrow-line{
+    width: 46px;
+    height: 3px;
+    background: var(--accent);
+    margin-bottom: 1.2em;
+  }
+  #banner h2{
+    font-size: 2.1em;
+    margin-bottom: 0.6em;
+  }
+  #banner p{
+    color: var(--ink-soft);
+    font-size: 1.05em;
+  }
+  #banner .cta-row{
+    margin-top: 1.8em;
+    display: flex;
+    gap: 1em;
+    flex-wrap: wrap;
+  }
+  .btn{
+    display: inline-block;
+    padding: 0.8em 1.6em;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.92em;
+    border: 2px solid var(--accent);
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .btn.solid{
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn.solid:hover{ background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
+  .btn.outline{ color: var(--ink); border-color: var(--line); }
+  .btn.outline:hover{ border-color: var(--accent); color: var(--accent); }
+
+  /* ===== SECTION HEADINGS (used by Projects / Contact) ===== */
+  .section-heading{ margin-bottom: 2em; }
+  .section-heading h2{ font-size: 1.9em; }
+  .section-heading .eyebrow-line{
+    width: 46px;
+    height: 3px;
+    background: var(--accent);
+    margin-bottom: 1em;
+  }
+
+  /* ===== PROJECTS GRID ===== */
+  .projects-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns on desktop */
+    gap: 2em;
+  }
+
+  .project-card{
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-card .thumb{
+    aspect-ratio: 4 / 3;
+    background: var(--paper-alt);
+    overflow: hidden;
+  }
+  .project-card .thumb img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .project-card .card-body{
+    padding: 1.4em 1.4em 1.6em;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+  .project-card h3{
+    font-size: 1.15em;
+    margin-bottom: 0.4em;
+  }
+  .project-card p{
+    color: var(--ink-soft);
+    font-size: 0.94em;
+    flex-grow: 1;
+    margin-bottom: 1.2em;
+  }
+  .project-card .btn{
+    align-self: flex-start;
+    padding: 0.6em 1.3em;
+    font-size: 0.85em;
+  }
+
+  /* ===== CONTACT SECTION ===== */
+  .contact-list{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1em;
+  }
+  .contact-list li{
+    display: flex;
+    align-items: center;
+    gap: 0.9em;
+    font-size: 1.02em;
+  }
+  .contact-list i{
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(93,156,154,0.12);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.05em;
+    flex-shrink: 0;
+  }
+  .contact-list a{ color: var(--ink); font-weight: 600; }
+  .contact-list a:hover{ color: var(--accent); }
+
+  /* ===== FOOTER ===== */
+  #footer{
+    padding: 2em 3em;
+    border-top: 1px solid var(--line);
+    color: var(--ink-soft);
+    font-size: 0.88em;
+    max-width: 1100px;
+  }
+
+  /* ---------------------------------------------------------------------
+     MOBILE / SMALL SCREEN LAYOUT
+     Below 900px the sidebar becomes an off-canvas slide-out panel,
+     and the hamburger icon in the header opens/closes it.
+     --------------------------------------------------------------------- */
+  @media (max-width: 900px){
+
+    #sidebar{
+      transform: translateX(-100%);
+      box-shadow: 4px 0 24px rgba(0,0,0,0.25);
+    }
+    #sidebar.open{ transform: translateX(0); }
+    #sidebar-close{ display: block; }
+
+    #main-wrapper{ margin-left: 0; }
+
+    #menu-toggle{ display: block; }
+
+    section{ padding: 3.5em 1.3em; }
+
+    .projects-grid{
+      grid-template-columns: 1fr; /* stack cards on mobile */
+    }
+  }
+
+  @media (min-width: 901px) and (max-width: 1150px){
+    .projects-grid{
+      grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+    }
+  }
+
+  /* Overlay shown behind the sidebar on mobile when it's open */
+  #sidebar-overlay{
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 95;
+  }
+  #sidebar-overlay.show{ display: block; }
+
+  /* Respect users who've asked their system to reduce motion */
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    #sidebar{ transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================================================================
+     SIDEBAR
+     EDIT THIS: your name, job title, and nav links live here.
+     =================================================================== -->
+<aside id="sidebar">
+  <button id="sidebar-close" aria-label="Close menu"><i class="fa-solid fa-xmark"></i></button>
+
+  <div>
+    <div class="id-block">
+      <!-- EDIT THIS: your full name -->
+      <h1>Revathi</h1>
+      <!-- EDIT THIS: your job title -->
+      <p class="role">Power BI Developer</p>
+    </div>
+
+    <!-- EDIT THIS: nav links. Each href="#id" must match a section's id
+         further down the page (id="about", id="projects", id="contact").
+         Add or remove <li> lines the same way to change the menu. -->
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- EDIT THIS: social icons at the bottom of the sidebar.
+       Replace the "#" in each href with your real profile link.
+       To remove an icon, delete its whole <a> line.
+       To add one, copy an <a> line and swap the fa-brands class
+       for the icon you want (Font Awesome has hundreds — search
+       "font awesome icons" to browse them). -->
+  <div class="socials">
+    <a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+    <a href="mailto:rev.revathi65@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+    <a href="#" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+  </div>
+</aside>
+
+<!-- Dark overlay behind the mobile menu (click it to close the menu) -->
+<div id="sidebar-overlay"></div>
+
+<div id="main-wrapper">
+
+  <!-- =================================================================
+       TOP HEADER BAR
+       EDIT THIS: the little logo text and its social icons.
+       ================================================================= -->
+  <header id="topbar">
+    <button id="menu-toggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+
+    <!-- EDIT THIS: the logo text shown top-left of the header bar -->
+    <div class="logo">Port<span>folio</span></div>
+
+    <!-- EDIT THIS: same idea as the sidebar socials above — swap the
+         "#" hrefs for your real links, or add/remove <a> icons. -->
+    <div class="socials">
+      <a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+      <a href="mailto:rev.revathi65@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+      <a href="#" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ===============================================================
+         BANNER SECTION — your bio
+         EDIT THIS: the heading and the paragraph text below it.
+         =============================================================== -->
+    <section id="banner">
+      <div class="banner-inner" id="about">
+        <div class="eyebrow-line"></div>
+        <!-- EDIT THIS: greeting heading -->
+        <h2>Hi, I'm Revathi.</h2>
+        <!-- EDIT THIS: your bio paragraph. Just replace the sentence
+             below with your own — keep it inside the <p> tags. -->
+        <p>
+          I'm a Data Analyst and Power BI Developer focused on transforming raw data into
+          meaningful insights and interactive dashboards. With expertise in Power BI, DAX,
+          data modeling, and data visualization, I create business intelligence solutions
+          that help organizations understand performance, identify trends, monitor KPIs,
+          and make data-driven decisions. The tools I use are Microsoft Power BI Desktop,
+          and I'm open to work on Power BI projects as a freelancer or remote (WFH).
+        </p>
+        <div class="cta-row">
+          <a href="#projects" class="btn solid">View my projects</a>
+          <a href="#contact" class="btn outline">Get in touch</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===============================================================
+         PROJECTS SECTION
+         This is the part you'll come back to most often. Read the
+         comments inside the first card carefully — every other card
+         is built the exact same way.
+         =============================================================== -->
+    <section id="projects" class="alt-bg">
+      <div class="section-heading">
+        <div class="eyebrow-line"></div>
+        <h2>Projects</h2>
+      </div>
+
+      <div class="projects-grid">
+
+        <!-- =============================================================
+             ONE PROJECT CARD — copy this whole <article>...</article>
+             block to add another project. Paste the copy right below
+             this card (before the closing </div> of .projects-grid),
+             then edit the 4 spots marked "EDIT THIS" inside your new
+             copy. The grid automatically wraps to a new row every 3
+             cards, so you don't need to touch any CSS to add more.
+             ============================================================= -->
+        <article class="project-card">
+
+          <div class="thumb">
+            <!--
+              EDIT THIS — PROJECT IMAGE:
+              1) Put your screenshot/image file inside the "images" folder
+                 that came with this site (e.g. images/sales-dashboard.png).
+              2) Change the src below from the placeholder link to your
+                 own file path, like:  src="images/sales-dashboard.png"
+              3) Also update the "alt" text to describe the image —
+                 this helps screen readers and search engines.
+              Until you add your own image, this uses a free placeholder
+              image service so the card still looks complete.
+            -->
+            <img src="https://placehold.co/600x450/5D9C9A/ffffff?text=Project+Screenshot"
+                 alt="Screenshot of the Power BI sales dashboard project">
+          </div>
+
+          <div class="card-body">
+            <!-- EDIT THIS — PROJECT TITLE: replace the text between the h3 tags -->
+            <h3>Sales Performance Dashboard</h3>
+
+            <!-- EDIT THIS — PROJECT DESCRIPTION: replace the text between the p tags.
+                 Keep it to 2–3 short sentences so all cards line up neatly. -->
+            <p>
+              An interactive Power BI dashboard that tracks monthly sales, regional
+              performance, and top products using DAX measures and dynamic filters.
+            </p>
+
+            <!-- EDIT THIS — PROJECT LINK: replace the "#" below with a link to
+                 your live dashboard, PDF report, GitHub repo, or portfolio page.
+                 If you don't have a link yet, you can leave it as "#" for now. -->
+            <a href="#" class="btn solid" target="_blank" rel="noopener">View Project</a>
+          </div>
+        </article>
+        <!-- ============== END OF THE COPY-ABLE PROJECT CARD ============== -->
+
+        <!-- Below are two more example cards, built the same way as above,
+             just so the 3-column grid looks complete out of the box.
+             Edit their image / title / description / link the same way. -->
+        <article class="project-card">
+          <div class="thumb">
+            <img src="https://placehold.co/600x450/5D9C9A/ffffff?text=Project+Screenshot"
+                 alt="Screenshot of the HR analytics dashboard project">
+          </div>
+          <div class="card-body">
+            <h3>HR Analytics Dashboard</h3>
+            <p>
+              A Power BI report analysing employee attrition, headcount trends, and
+              department-wise KPIs to support data-driven HR decisions.
+            </p>
+            <a href="#" class="btn solid" target="_blank" rel="noopener">View Project</a>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="thumb">
+            <img src="https://placehold.co/600x450/5D9C9A/ffffff?text=Project+Screenshot"
+                 alt="Screenshot of the finance KPI tracker project">
+          </div>
+          <div class="card-body">
+            <h3>Finance KPI Tracker</h3>
+            <p>
+              A dashboard consolidating revenue, expenses, and profit margins with
+              drill-through pages built using Power Query and DAX.
+            </p>
+            <a href="#" class="btn solid" target="_blank" rel="noopener">View Project</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ===============================================================
+         CONTACT SECTION
+         EDIT THIS: your email, LinkedIn URL, and location.
+         =============================================================== -->
+    <section id="contact">
+      <div class="section-heading">
+        <div class="eyebrow-line"></div>
+        <h2>Contact</h2>
+      </div>
+
+      <ul class="contact-list">
+        <li>
+          <i class="fa-solid fa-envelope"></i>
+          <!-- EDIT THIS: your email address (appears twice below — in the
+               visible text and in the mailto: link — keep both matching) -->
+          <a href="mailto:rev.revathi65@gmail.com">rev.revathi65@gmail.com</a>
+        </li>
+        <li>
+          <i class="fa-brands fa-linkedin-in"></i>
+          <!-- EDIT THIS: replace the href with your real LinkedIn profile URL -->
+          <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn Profile</a>
+        </li>
+        <li>
+          <i class="fa-solid fa-location-dot"></i>
+          <!-- EDIT THIS: your location -->
+          <span>Vellore, Tamil Nadu, India</span>
+        </li>
+      </ul>
+    </section>
+
+  </main>
+
+  <!-- =================================================================
+       FOOTER
+       EDIT THIS: the name in the copyright line, if needed.
+       ================================================================= -->
+  <footer id="footer">
+    <p>&copy; <span id="year"></span> Revathi. All rights reserved.</p>
+  </footer>
+
+</div><!-- /#main-wrapper -->
+
+<script>
+  /* =====================================================================
+     JAVASCRIPT
+     You shouldn't need to edit anything below this line — it just
+     handles the mobile menu opening/closing and a small convenience
+     for the footer year. It's commented in case you're curious how
+     it works.
+     ===================================================================== */
+
+  // Automatically show the current year in the footer copyright line,
+  // so you never have to update it by hand.
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Mobile menu: open the sidebar when the hamburger button is clicked.
+  var sidebar   = document.getElementById('sidebar');
+  var overlay   = document.getElementById('sidebar-overlay');
+  var openBtn   = document.getElementById('menu-toggle');
+  var closeBtn  = document.getElementById('sidebar-close');
+
+  function openMenu(){
+    sidebar.classList.add('open');
+    overlay.classList.add('show');
+  }
+  function closeMenu(){
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+  }
+
+  openBtn.addEventListener('click', openMenu);
+  closeBtn.addEventListener('click', closeMenu);
+  overlay.addEventListener('click', closeMenu);
+
+  // Close the mobile menu automatically after tapping a nav link,
+  // so the menu doesn't stay open over the section you just jumped to.
+  var navLinks = sidebar.querySelectorAll('nav a');
+  navLinks.forEach(function(link){
+    link.addEventListener('click', closeMenu);
+  });
+</script>
+
+</body>
+</html>
