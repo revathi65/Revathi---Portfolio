@@ -109,6 +109,27 @@
   }
   .top-header .header-socials a:hover{ color: var(--accent); transform: translateY(-2px); }
 
+  .badge-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    padding: 20px;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 22px;
+    border: 1.5px solid #8a9294;
+    border-radius: 999px;
+    color: #000;
+    font-size: 15px;
+    font-weight: 500;
+    box-shadow: 0 0 8px rgba(61, 220, 132, 0.25);
+    white-space: nowrap;
+    transition: all 0.25s ease;
+  }
+
   /* ---- Fixed left sidebar ---- */
   .sidebar{
     position: fixed;
@@ -536,8 +557,15 @@
      ============================================================ -->
 <header class="top-header">
   <!-- EDIT ME: the little logo text in the top-left of the header -->
-  <div class="logo">Port<span>folio</span></div>
+  <!-- <div class="logo">Port<span>folio</span></div> -->
 
+   <div class="badge-container">
+    <span class="badge">Power Query</span>
+    <span class="badge">DAX</span>
+    <span class="badge">Data Visualization</span>
+    <span class="badge">Data Analysis</span>
+  </div>
+  
   <!-- Same idea as the sidebar socials above — edit the links here too
        if you change them, so both places stay in sync. -->
   <div class="header-socials">
@@ -621,7 +649,7 @@
           <!-- EDIT ME — PROJECT LINK: change href="#" to the real
                URL of your published report, GitHub repo, or case
                study write-up. -->
-          <a href="https://www.youtube.com/watch?v=MvGx8pg9pmI" class="btn btn-accent">View Project</a>
+          <a href="https://www.youtube.com/watch?v=MvGx8pg9pmI" class="btn btn-accent" target="_blank">View Project</a>
         </div>
       </div>
       <!-- ===================== END OF ONE PROJECT CARD ===================== -->
@@ -761,7 +789,7 @@
         3. The download="..." attribute sets the filename people will
            see when it saves to their computer — change it to your name.
       -->
-      <a class="btn-download" href="images/resume.pdf" download="D. Revathi Resume.pdf">
+      <a class="btn-download" href="D. Revathi Resume.pdf" download="D. Revathi Resume.pdf">
         <i class="fa-solid fa-download"></i>
         Download Resume
       </a>
