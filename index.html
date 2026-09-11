@@ -3,1027 +3,881 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Revathi | Power BI Developer</title>
+<title>Revathi — Power BI Developer</title>
+<meta name="description" content="Revathi — Data Analyst & Power BI Developer portfolio. Power BI, DAX, data modeling and data visualization.">
 
 <!--
-=========================================================================
-  WELCOME! This file is built so you can customise your whole site
-  by just editing text between HTML tags — no coding knowledge needed.
+  ============================================================
+  WELCOME! This whole website lives in ONE file: index.html.
+  All the styling (CSS) and interactivity (JavaScript) are
+  embedded right here, so you can email this single file to
+  anyone, or upload it as-is to GitHub Pages / Netlify / etc.
 
-  Every place you might want to change has a comment right above it
-  that starts with "EDIT THIS:" — just search for that phrase
-  (Ctrl+F / Cmd+F in your code editor) to jump between the spots.
-
-  The file is organised top to bottom like this:
-    1. Fonts & Icons (CDN links — don't need to touch these)
-    2. CSS styles (all in one <style> block)
-    3. Sidebar (name, title, nav, socials)
-    4. Header bar (logo + socials)
-    5. Banner section (your bio)
-    6. Projects section (the 3-column card grid)
-    7. Contact section
-    8. Footer
-    9. JavaScript (small bits for mobile menu + smooth scroll)
-=========================================================================
+  Look for boxes like this one throughout the file — they mark
+  exactly the spots where YOU should type your own info.
+  Everywhere you see "EDIT ME" is a safe place to make changes.
+  ============================================================
 -->
 
-<!-- Google Fonts: Source Sans 3 (body text) + Source Serif 4 (headings) -->
+<!-- ============ FONTS + ICONS (loaded from the internet, no download needed) ============ -->
+<!-- Google Fonts: Source Sans 3 (for most text) + Source Serif 4 (for headings) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
-
-<!-- Font Awesome (for the social + UI icons) -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+<!-- Font Awesome: gives us the little icons (envelope, LinkedIn, YouTube, etc.) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
-  /* =====================================================================
-     DESIGN TOKENS
-     EDIT THIS: change the accent colour here and it updates everywhere
-     on the site automatically (buttons, links, highlights, icons).
-     ===================================================================== */
+  /* ============================================================
+     1. SETTINGS YOU CAN TWEAK
+     ------------------------------------------------------------
+     These CSS variables control colour and spacing site-wide.
+     Change a value here and it updates everywhere on the page.
+     ============================================================ */
   :root{
-    --accent: #5D9C9A;       /* main accent colour */
-    --accent-dark: #497e7c;  /* a darker shade, used for hover states */
-    --ink: #2b2f30;          /* main text colour (near-black) */
-    --ink-soft: #63696b;     /* secondary/muted text colour */
-    --paper: #ffffff;        /* main background colour */
-    --paper-alt: #f7f8f8;    /* slightly-off-white background for alternating sections */
-    --line: #e6e8e8;         /* border / divider colour */
-    --sidebar-w: 300px;      /* width of the fixed left sidebar on desktop */
-    --header-h: 64px;        /* height of the top header bar */
+    --accent: #5D9C9A;        /* EDIT ME: the main accent colour used for links, highlights, bars */
+    --accent-dark: #4a807e;   /* a slightly darker shade of the accent, used for hovers */
+    --ink: #1f2426;           /* near-black text colour */
+    --ink-soft: #4b5457;      /* softer body-text grey */
+    --muted: #8a9294;         /* muted grey for secondary text (dates, captions) */
+    --hairline: #e4e7e7;      /* light grey border/divider colour */
+    --paper: #ffffff;         /* page background */
+    --paper-alt: #f7f9f9;     /* very light grey background for alternating sections */
+    --sidebar-w: 280px;       /* EDIT ME: width of the fixed left sidebar */
+    --font-sans: 'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
   }
 
   *{ box-sizing: border-box; }
-
   html{ scroll-behavior: smooth; }
-
   body{
     margin: 0;
+    font-family: var(--font-sans);
+    color: var(--ink-soft);
     background: var(--paper);
-    color: var(--ink);
-    font-family: 'Source Sans 3', sans-serif;
-    font-size: 16px;
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
   }
-
-  h1, h2, h3, h4{
-    font-family: 'Source Serif 4', serif;
+  h1,h2,h3,h4{
+    font-family: var(--font-serif);
     color: var(--ink);
+    margin: 0 0 .5em 0;
     line-height: 1.2;
-    margin: 0 0 0.5em 0;
   }
-
   a{ color: var(--accent); text-decoration: none; }
   a:hover{ color: var(--accent-dark); }
-
   img{ max-width: 100%; display: block; }
+  ::selection{ background: var(--accent); color: #fff; }
 
-  /* Visible keyboard focus for accessibility */
+  /* Visible keyboard focus for accessibility — don't remove this */
   a:focus-visible, button:focus-visible{
     outline: 2px solid var(--accent);
     outline-offset: 3px;
   }
 
-  /* ---------------------------------------------------------------------
-     LAYOUT SHELL
-     The page has three fixed/sticky pieces (sidebar + header) and one
-     scrolling column (main). On mobile the sidebar collapses into a
-     slide-out menu triggered by a hamburger button in the header.
-     --------------------------------------------------------------------- */
+  /* ============================================================
+     2. PAGE FRAME — top header + fixed sidebar + main content
+     ============================================================ */
 
-  /* ===== SIDEBAR (left, fixed) ===== */
-  #sidebar{
+  /* ---- Top header bar ---- */
+  .top-header{
     position: fixed;
-    top: 0;
-    left: 0;
+    top: 0; left: var(--sidebar-w); right: 0;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: saturate(180%) blur(6px);
+    border-bottom: 1px solid var(--hairline);
+    z-index: 50;
+  }
+  .top-header .logo{
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--ink);
+    letter-spacing: .02em;
+  }
+  .top-header .logo span{ color: var(--accent); }
+  .top-header .header-socials{ display: flex; gap: 1.1rem; }
+  .top-header .header-socials a{
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+    transition: color .2s ease, transform .2s ease;
+  }
+  .top-header .header-socials a:hover{ color: var(--accent); transform: translateY(-2px); }
+
+  /* ---- Fixed left sidebar ---- */
+  .sidebar{
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
     width: var(--sidebar-w);
-    height: 100%;
     background: var(--ink);
-    color: #d9dcdc;
+    color: #dfe6e6;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 3em 2em;
-    z-index: 100;
-    transition: transform 0.3s ease;
+    padding: 2.75rem 2rem;
+    z-index: 60;
   }
-
-  #sidebar .id-block h1{
+  .sidebar .identity .name{
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    font-weight: 700;
     color: #fff;
-    font-size: 1.7em;
-    margin-bottom: 0.15em;
+    margin-bottom: .25rem;
   }
-
-  /* EDIT THIS: this is where your job title's colour comes from —
-     it uses the --accent variable set at the top of the CSS. */
-  #sidebar .id-block p.role{
+  .sidebar .identity .role{
+    font-size: .95rem;
     color: var(--accent);
     font-weight: 600;
-    font-size: 0.95em;
-    letter-spacing: 0.02em;
-    margin: 0;
+    letter-spacing: .01em;
   }
-
-  #sidebar nav{ margin-top: 2.5em; }
-  #sidebar nav ul{ list-style: none; margin: 0; padding: 0; }
-  #sidebar nav li{ margin-bottom: 0.9em; }
-  #sidebar nav a{
-    color: #d9dcdc;
+  .sidebar nav{ margin-top: 2.75rem; }
+  .sidebar nav ul{ list-style: none; margin: 0; padding: 0; }
+  .sidebar nav li + li{ margin-top: .35rem; }
+  .sidebar nav a{
+    display: block;
+    padding: .55rem 0;
+    color: #c6cfcf;
+    font-size: .98rem;
     font-weight: 600;
-    font-size: 0.95em;
-    position: relative;
-    padding-bottom: 2px;
-    border-bottom: 2px solid transparent;
+    border-left: 2px solid transparent;
+    padding-left: .9rem;
+    margin-left: -.9rem;
+    transition: color .2s ease, border-color .2s ease;
   }
-  #sidebar nav a:hover,
-  #sidebar nav a.active{
+  .sidebar nav a:hover{ color: #fff; }
+  .sidebar nav a.active{
     color: #fff;
-    border-bottom-color: var(--accent);
+    border-left-color: var(--accent);
   }
+  .sidebar .sidebar-socials{ display: flex; gap: 1.25rem; }
+  .sidebar .sidebar-socials a{
+    color: #c6cfcf;
+    font-size: 1.15rem;
+    transition: color .2s ease, transform .2s ease;
+  }
+  .sidebar .sidebar-socials a:hover{ color: var(--accent); transform: translateY(-3px); }
 
-  #sidebar .socials{
-    display: flex;
-    gap: 1em;
-  }
-  #sidebar .socials a{
-    color: #d9dcdc;
-    font-size: 1.15em;
-    width: 38px;
-    height: 38px;
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  #sidebar .socials a:hover{
-    color: #fff;
-    border-color: var(--accent);
-    background: var(--accent);
-  }
-
-  /* Close button, only shown on mobile inside the sidebar */
-  #sidebar-close{
+  /* Small hamburger button — only shows on narrow / mobile screens */
+  .sidebar-toggle{
     display: none;
-    background: none;
+    position: fixed;
+    top: 14px; left: 14px;
+    z-index: 80;
+    width: 44px; height: 44px;
+    border-radius: 8px;
     border: none;
-    color: #d9dcdc;
-    font-size: 1.4em;
-    position: absolute;
-    top: 1.2em;
-    right: 1.2em;
+    background: var(--ink);
+    color: #fff;
+    font-size: 1.1rem;
     cursor: pointer;
   }
 
-  /* ===== MAIN WRAPPER (everything except the sidebar) ===== */
-  #main-wrapper{
+  /* ---- Main content wrapper ---- */
+  main{
     margin-left: var(--sidebar-w);
-    min-height: 100%;
+    padding-top: 64px; /* leaves room for the fixed top header */
   }
-
-  /* ===== TOP HEADER BAR ===== */
-  #topbar{
-    position: sticky;
-    top: 0;
-    height: var(--header-h);
-    background: rgba(255,255,255,0.92);
-    backdrop-filter: blur(6px);
-    border-bottom: 1px solid var(--line);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 2.5em;
-    z-index: 90;
-  }
-
-  #topbar .logo{
-    font-family: 'Source Serif 4', serif;
-    font-weight: 700;
-    font-size: 1.2em;
-    color: var(--ink);
-  }
-  #topbar .logo span{ color: var(--accent); }
-
-  #topbar .socials{ display: flex; gap: 1.1em; }
-  #topbar .socials a{ color: var(--ink-soft); font-size: 1.05em; }
-  #topbar .socials a:hover{ color: var(--accent); }
-
-  /* Hamburger button — only visible on small screens */
-  #menu-toggle{
-    display: none;
-    background: none;
-    border: none;
-    font-size: 1.3em;
-    color: var(--ink);
-    cursor: pointer;
-  }
-
-  /* ===== GENERIC SECTION SPACING ===== */
   section{
-    padding: 5.5em 3em;
+    padding: 5.5rem 3rem;
     max-width: 1100px;
   }
-  section.alt-bg{ background: var(--paper-alt); }
+  section + section{ border-top: 1px solid var(--hairline); }
+  .section-alt{ background: var(--paper-alt); max-width: none; }
+  .section-alt > .section-inner{ max-width: 1100px; }
+  .eyebrow-free-heading{ font-size: 2rem; margin-bottom: 1.75rem; }
 
-  /* ===== BANNER (bio) ===== */
-  #banner{
-    padding-top: 6.5em;
-  }
-  #banner .banner-inner{
-    max-width: 640px;
-  }
-  #banner .eyebrow-line{
-    width: 46px;
-    height: 3px;
-    background: var(--accent);
-    margin-bottom: 1.2em;
-  }
-  #banner h2{
-    font-size: 2.1em;
-    margin-bottom: 0.6em;
-  }
-  #banner p{
-    color: var(--ink-soft);
-    font-size: 1.05em;
-  }
-  #banner .cta-row{
-    margin-top: 1.8em;
+  /* ============================================================
+     3. BANNER (bio) SECTION
+     ============================================================ */
+  .banner{
     display: flex;
-    gap: 1em;
+    align-items: center;
+    min-height: calc(100vh - 64px);
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+  .banner .banner-content{ max-width: 640px; }
+  .banner .kicker{
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-bottom: .75rem;
+  }
+  .banner h1{
+    font-size: 2.6rem;
+    margin-bottom: 1.1rem;
+  }
+  .banner p{
+    font-size: 1.08rem;
+    color: var(--ink-soft);
+    max-width: 62ch;
+  }
+  .banner .banner-cta{
+    margin-top: 2rem;
+    display: flex;
+    gap: 1rem;
     flex-wrap: wrap;
   }
   .btn{
-    display: inline-block;
-    padding: 0.8em 1.6em;
-    border-radius: 4px;
-    font-weight: 600;
-    font-size: 0.92em;
-    border: 2px solid var(--accent);
-    transition: background 0.2s ease, color 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .8rem 1.6rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: .95rem;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    background: transparent;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease;
   }
-  .btn.solid{
-    background: var(--accent);
+  .btn:hover{ background: var(--ink); color: #fff; }
+  .btn-accent{
+    border-color: var(--accent);
     color: #fff;
-  }
-  .btn.solid:hover{ background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
-  .btn.outline{ color: var(--ink); border-color: var(--line); }
-  .btn.outline:hover{ border-color: var(--accent); color: var(--accent); }
-
-  /* ===== SECTION HEADINGS (used by Projects / Contact) ===== */
-  .section-heading{ margin-bottom: 2em; }
-  .section-heading h2{ font-size: 1.9em; }
-  .section-heading .eyebrow-line{
-    width: 46px;
-    height: 3px;
     background: var(--accent);
-    margin-bottom: 1em;
   }
+  .btn-accent:hover{ background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
 
-  /* ===== PROJECTS GRID ===== */
+  /* ============================================================
+     4. PROJECTS SECTION — 3-column responsive card grid
+     ============================================================ */
   .projects-grid{
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 columns on desktop */
-    gap: 2em;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
   }
+  @media (max-width: 980px){ .projects-grid{ grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 680px){ .projects-grid{ grid-template-columns: 1fr; } }
 
   .project-card{
     background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 6px;
+    border: 1px solid var(--hairline);
+    border-radius: 10px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    transition: transform .2s ease, box-shadow .2s ease;
   }
-
+  .project-card:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 14px 30px -18px rgba(31,36,38,.35);
+  }
   .project-card .thumb{
-    aspect-ratio: 4 / 3;
-    background: var(--paper-alt);
-    overflow: hidden;
-  }
-  .project-card .thumb img{
     width: 100%;
-    height: 100%;
+    aspect-ratio: 16/10;
     object-fit: cover;
+    background: var(--paper-alt);
+    border-bottom: 1px solid var(--hairline);
   }
-
   .project-card .card-body{
-    padding: 1.4em 1.4em 1.6em;
+    padding: 1.4rem 1.4rem 1.6rem;
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
+    flex: 1;
   }
-  .project-card h3{
-    font-size: 1.15em;
-    margin-bottom: 0.4em;
-  }
-  .project-card p{
-    color: var(--ink-soft);
-    font-size: 0.94em;
-    flex-grow: 1;
-    margin-bottom: 1.2em;
-  }
-  .project-card .btn{
-    align-self: flex-start;
-    padding: 0.6em 1.3em;
-    font-size: 0.85em;
-  }
+  .project-card h3{ font-size: 1.15rem; margin-bottom: .5rem; }
+  .project-card p{ font-size: .95rem; color: var(--ink-soft); flex: 1; margin-bottom: 1.3rem; }
+  .project-card .btn{ align-self: flex-start; padding: .6rem 1.3rem; font-size: .85rem; }
 
-    /* ---------- Skills ---------- */
-    :root {
-    --cream: #fdf6ec;
-    --peach-1: #ffe9c7;
-    --ink: #14120f;
-    --muted: #6b6459;
-    --line: #e7ddcb;
-    --accent: #f2994a;
-  }
-
-  * { box-sizing: border-box; }
-
-  body {
-    margin: 0;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    color: var(--ink);
-    background: var(--cream);
-    padding: 60px 24px;
-  }
-
-  .wrap {
-    max-width: 760px;
-    margin: 0 auto;
-  }
-
-  .section-title {
-    font-size: 32px;
-    font-weight: 800;
-    text-transform: uppercase;
-    margin: 0 0 10px;
-  }
-
-  .section-sub {
-    color: var(--muted);
-    font-size: 15px;
-    margin: 0 0 32px;
-    max-width: 480px;
-  }
-
-  /* Tabs */
-  .skills-tabs {
-    display: inline-flex;
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    padding: 4px;
-    margin-bottom: 32px;
-  }
-
-  .tab-btn {
-    border: none;
-    background: transparent;
-    padding: 10px 24px;
-    border-radius: 999px;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--muted);
-    cursor: pointer;
-    transition: background 0.25s ease, color 0.25s ease;
-  }
-
-  .tab-btn.active {
-    background: var(--ink);
-    color: #fff;
-  }
-
-  /* Grid */
-  .skills-grid {
+  /* ============================================================
+     5. SKILLS SECTION — categorized, animated bars
+     ============================================================ */
+  .skills-columns{
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-top: 2.5rem;
   }
-
-  .skill-card {
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 18px;
-    padding: 26px;
-    display: none;
-    opacity: 0;
-    transform: translateY(6px);
-    transition: opacity 0.35s ease, transform 0.35s ease;
+  @media (max-width: 780px){ .skills-columns{ grid-template-columns: 1fr; gap: 2.5rem; } }
+  .skills-cat-title{
+    font-size: .82rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 1.4rem;
   }
-
-  .skill-card.visible {
-    display: block;
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .skill-head {
+  .skill-item{ margin-bottom: 1.5rem; }
+  .skill-item:last-child{ margin-bottom: 0; }
+  .skill-label{
     display: flex;
     align-items: center;
-    gap: 14px;
-    margin-bottom: 18px;
+    justify-content: space-between;
+    margin-bottom: .5rem;
+    font-size: .98rem;
+    color: var(--ink);
+    font-weight: 600;
   }
-
-  .skill-icon {
-    width: 42px;
-    height: 42px;
-    border-radius: 12px;
-    background: var(--peach-1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-
-  .skill-icon svg { width: 22px; height: 22px; }
-
-  .skill-name { font-size: 17px; font-weight: 700; }
-  .skill-category { font-size: 12.5px; color: var(--muted); }
-
-  .skill-bar-track {
+  .skill-label .skill-icon{ color: var(--accent); margin-right: .55rem; width: 1.1em; text-align: center; }
+  .skill-label .skill-pct{ color: var(--muted); font-weight: 600; font-size: .85rem; }
+  .skill-bar-track{
+    width: 100%;
     height: 8px;
-    background: var(--line);
     border-radius: 999px;
+    background: var(--hairline);
     overflow: hidden;
   }
-
-  .skill-bar-fill {
+  .skill-bar-fill{
     height: 100%;
-    width: 0%;
+    width: 0%; /* JS animates this up to the target width when it scrolls into view */
     border-radius: 999px;
-    background: linear-gradient(90deg, var(--accent), #f6c453);
-    transition: width 1.1s ease;
+    background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+    transition: width 1.1s cubic-bezier(.22,.9,.3,1);
   }
 
-  .skill-level {
-    display: flex;
-    justify-content: space-between;
-    font-size: 12.5px;
+  /* ============================================================
+     6. EXPERIENCE SECTION — typographic horizontal timeline
+     ============================================================ */
+  .timeline{ margin-top: 2rem; }
+  .timeline-row{
+    display: grid;
+    grid-template-columns: 110px 1fr 1fr;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding: 2rem 0;
+    border-top: 1px solid var(--hairline);
+  }
+  .timeline-row:last-child{ border-bottom: 1px solid var(--hairline); }
+  .timeline-year{
+    font-size: .92rem;
     color: var(--muted);
-    margin-top: 8px;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+  .timeline-title{
+    font-family: var(--font-sans);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .timeline-tools{
+    font-size: .95rem;
+    color: var(--muted);
+    font-weight: 400;
+    text-align: right;
+  }
+  @media (max-width: 700px){
+    .timeline-row{ grid-template-columns: 1fr; gap: .4rem; }
+    .timeline-tools{ text-align: left; }
   }
 
-  @media (max-width: 600px) {
-    .skills-grid { grid-template-columns: 1fr; }
-  }
-
-  /* ---------- Experience ---------- */
-  .timeline{ position:relative; max-width:760px; }
-  .timeline::before{
-    content:"";
-    position:absolute;
-    left:19px; top:8px; bottom:8px;
-    width:2px;
-    background:linear-gradient(180deg, var(--accent), transparent);
-  }
-  .timeline-item{ position:relative; padding-left:60px; }
-  .timeline-dot{
-    position:absolute; left:8px; top:4px;
-    width:24px; height:24px; border-radius:50%;
-    background:var(--bg);
-    border:2px solid var(--accent);
-    box-shadow:0 0 0 6px rgba(159,227,197,.12);
-  }
-  .timeline-card{ padding:30px; border-radius:var(--radius-lg); }
-  .timeline-card .role-title{ font-size:22px; font-weight:800; }
-  .timeline-card .role-meta{ display:flex; gap:14px; flex-wrap:wrap; color:var(--secondary); font-size:13.5px; margin-top:8px; font-family:'Fira Code',monospace; }
-  .timeline-card ul{ margin-top:18px; display:flex; flex-direction:column; gap:10px; }
-  .timeline-card ul li{ display:flex; gap:10px; color:var(--muted); font-size:15px; }
-  .timeline-card ul li::before{ content:"▹"; color:var(--accent); flex-shrink:0; }
-
-  /* ===== CONTACT SECTION ===== */
-  .contact-list{
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 1.1em;
-  }
-  .contact-list li{
+  /* ============================================================
+     7. RESUME SECTION
+     ============================================================ */
+  .resume-box{
     display: flex;
     align-items: center;
-    gap: 0.9em;
-    font-size: 1.02em;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    background: var(--paper-alt);
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    padding: 2.5rem;
+    margin-top: 2rem;
   }
-  .contact-list i{
-    width: 42px;
-    height: 42px;
+  .resume-box p{ margin: 0; max-width: 46ch; color: var(--ink-soft); }
+  .btn-download{
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    padding: .95rem 2rem;
+    border-radius: 999px;
+    background: var(--ink);
+    color: #fff !important;
+    font-weight: 700;
+    font-size: .98rem;
+    border: none;
+    cursor: pointer;
+    transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
+    white-space: nowrap;
+  }
+  .btn-download:hover{
+    background: #000;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px -12px rgba(0,0,0,.45);
+  }
+  .btn-download i{ font-size: .95rem; }
+
+  /* ============================================================
+     8. CONTACT SECTION
+     ============================================================ */
+  .contact-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.75rem;
+    margin-top: 2.5rem;
+  }
+  .contact-card{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.4rem;
+    border: 1px solid var(--hairline);
+    border-radius: 10px;
+    background: #fff;
+    transition: border-color .2s ease, transform .2s ease;
+  }
+  .contact-card:hover{ border-color: var(--accent); transform: translateY(-3px); }
+  .contact-card .icon-circle{
+    width: 46px; height: 46px;
     border-radius: 50%;
-    background: rgba(93,156,154,0.12);
-    color: var(--accent);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.05em;
+    background: var(--accent);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
     flex-shrink: 0;
   }
-  .contact-list a{ color: var(--ink); font-weight: 600; }
-  .contact-list a:hover{ color: var(--accent); }
+  .contact-card .contact-label{ font-size: .78rem; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+  .contact-card .contact-value{ font-size: .98rem; color: var(--ink); font-weight: 600; word-break: break-word; }
 
-  /* ===== FOOTER ===== */
-  #footer{
-    padding: 2em 3em;
-    border-top: 1px solid var(--line);
-    color: var(--ink-soft);
-    font-size: 0.88em;
-    max-width: 1100px;
+  /* ============================================================
+     9. FOOTER
+     ============================================================ */
+  footer{
+    padding: 2.5rem 3rem;
+    text-align: center;
+    color: var(--muted);
+    font-size: .88rem;
   }
 
-  /* ---------------------------------------------------------------------
-     MOBILE / SMALL SCREEN LAYOUT
-     Below 900px the sidebar becomes an off-canvas slide-out panel,
-     and the hamburger icon in the header opens/closes it.
-     --------------------------------------------------------------------- */
+  /* ============================================================
+     10. RESPONSIVE — collapse sidebar on smaller screens
+     ============================================================ */
   @media (max-width: 900px){
-
-    #sidebar{
+    :root{ --sidebar-w: 240px; }
+  }
+  @media (max-width: 760px){
+    .sidebar-toggle{ display: block; }
+    .sidebar{
       transform: translateX(-100%);
-      box-shadow: 4px 0 24px rgba(0,0,0,0.25);
+      transition: transform .25s ease;
+      width: 260px;
     }
-    #sidebar.open{ transform: translateX(0); }
-    #sidebar-close{ display: block; }
-
-    #main-wrapper{ margin-left: 0; }
-
-    #menu-toggle{ display: block; }
-
-    section{ padding: 3.5em 1.3em; }
-
-    .projects-grid{
-      grid-template-columns: 1fr; /* stack cards on mobile */
-    }
+    .sidebar.open{ transform: translateX(0); }
+    .top-header{ left: 0; padding-left: 4.5rem; }
+    main{ margin-left: 0; }
+    section{ padding: 3.5rem 1.5rem; }
+    .banner h1{ font-size: 2rem; }
   }
 
-  @media (min-width: 901px) and (max-width: 1150px){
-    .projects-grid{
-      grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
-    }
-  }
-
-  /* Overlay shown behind the sidebar on mobile when it's open */
-  #sidebar-overlay{
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.4);
-    z-index: 95;
-  }
-  #sidebar-overlay.show{ display: block; }
-
-  /* Respect users who've asked their system to reduce motion */
+  /* Respect users who've asked their OS/browser to reduce motion */
   @media (prefers-reduced-motion: reduce){
-    html{ scroll-behavior: auto; }
-    #sidebar{ transition: none; }
+    *{ animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   }
 </style>
 </head>
 <body>
 
-<!-- ===================================================================
-     SIDEBAR
-     EDIT THIS: your name, job title, and nav links live here.
-     =================================================================== -->
-<aside id="sidebar">
-  <button id="sidebar-close" aria-label="Close menu"><i class="fa-solid fa-xmark"></i></button>
+<!-- ============================================================
+     HAMBURGER BUTTON (mobile only) — toggles the sidebar open/closed
+     ============================================================ -->
+<button class="sidebar-toggle" id="sidebarToggle" aria-label="Open navigation menu" aria-expanded="false">
+  <i class="fa-solid fa-bars"></i>
+</button>
 
+<!-- ============================================================
+     FIXED LEFT SIDEBAR — name, title, nav links, social icons
+     ============================================================ -->
+<aside class="sidebar" id="sidebar">
   <div>
-    <div class="id-block">
-      <!-- EDIT THIS: your full name -->
-      <h1>Revathi</h1>
-      <!-- EDIT THIS: your job title -->
-      <p class="role">Power BI Developer</p>
+    <div class="identity">
+      <!-- EDIT ME: your name -->
+      <div class="name">Revathi</div>
+      <!-- EDIT ME: your job title -->
+      <div class="role">Power BI Developer</div>
     </div>
 
-    <!-- EDIT THIS: nav links. Each href="#id" must match a section's id
-         further down the page (id="about", id="projects", id="contact").
-         Add or remove <li> lines the same way to change the menu. -->
+    <!-- EDIT ME: Navigation links.
+         Each <a> jumps to the section with the matching id
+         further down the page (e.g. href="#about" jumps to
+         <section id="about">). To add a new nav item, copy one
+         <li>...</li> line, change the text and the href/id pair. -->
     <nav aria-label="Primary">
       <ul>
-        <li><a href="#about">About</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#experience" class="nav-link">Experience</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#resume" class="nav-link">Resume</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
       </ul>
     </nav>
   </div>
 
-  <!-- EDIT THIS: social icons at the bottom of the sidebar.
-       Replace the "#" in each href with your real profile link.
-       To remove an icon, delete its whole <a> line.
-       To add one, copy an <a> line and swap the fa-brands class
-       for the icon you want (Font Awesome has hundreds — search
-       "font awesome icons" to browse them). -->
-  <div class="socials">
-    <a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-    <a href="mailto:rev.revathi65@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
-    <a href="#" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+  <!-- EDIT ME: social icons shown at the bottom of the sidebar.
+       Replace the href="" URLs with your real profile links.
+       To remove an icon, delete its whole <a>...</a> line.
+       To add one, copy a line and pick a new Font Awesome icon
+       class from https://fontawesome.com/search -->
+  <div class="sidebar-socials">
+    <a href="https://www.linkedin.com/in/your-profile" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+      <i class="fa-brands fa-linkedin"></i>
+    </a>
+    <a href="https://www.youtube.com/@your-channel" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+      <i class="fa-brands fa-youtube"></i>
+    </a>
+    <a href="mailto:rev.revathi65@gmail.com" aria-label="Email">
+      <i class="fa-solid fa-envelope"></i>
+    </a>
   </div>
 </aside>
 
-<!-- Dark overlay behind the mobile menu (click it to close the menu) -->
-<div id="sidebar-overlay"></div>
+<!-- ============================================================
+     TOP HEADER BAR — logo on the left, social icons on the right
+     ============================================================ -->
+<header class="top-header">
+  <!-- EDIT ME: the little logo text in the top-left of the header -->
+  <div class="logo">Port<span>folio</span></div>
 
-<div id="main-wrapper">
-
-  <!-- =================================================================
-       TOP HEADER BAR
-       EDIT THIS: the little logo text and its social icons.
-       ================================================================= -->
-  <header id="topbar">
-    <button id="menu-toggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
-
-    <!-- EDIT THIS: the logo text shown top-left of the header bar -->
-   <!-- <div class="logo">Port<span>folio</span></div> 
-     
-    <div class="logo">
-     <span class="hero-kicker glass"><span class="dot"></span> Available for Power BI projects</span>
-       <div class="hero-tags">
-          <span class="tag glass">Power Query</span>
-          <span class="tag glass">DAX</span>
-          <span class="tag glass">Data Visualization</span>
-          <span class="tag glass">Data Analysis</span>
-     </div> -->
-    <style>
-    .badge-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-    padding: 20px;
-  }
-       .badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 10px 22px;
-    border: 1.5px solid #5D9C9A;
-    border-radius: 999px;
-    color: #000;
-    font-size: 15px;
-    font-weight: 500;
-    background: rgba(61, 220, 132, 0.05);
-    box-shadow: 0 0 8px rgba(61, 220, 132, 0.25);
-    white-space: nowrap;
-    transition: all 0.25s ease;
-  }
-
-</style>
-  <div class="badge-container">
-    <span class="badge">Power Query</span>
-    <span class="badge">DAX</span>
-    <span class="badge">Data Visualization</span>
-    <span class="badge">Data Analysis</span>
+  <!-- Same idea as the sidebar socials above — edit the links here too
+       if you change them, so both places stay in sync. -->
+  <div class="header-socials">
+    <a href="https://www.linkedin.com/in/your-profile" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+      <i class="fa-brands fa-linkedin"></i>
+    </a>
+    <a href="https://www.youtube.com/@your-channel" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+      <i class="fa-brands fa-youtube"></i>
+    </a>
+    <a href="mailto:rev.revathi65@gmail.com" aria-label="Email">
+      <i class="fa-solid fa-envelope"></i>
+    </a>
   </div>
-    
-    <!-- EDIT THIS: same idea as the sidebar socials above — swap the
-         "#" hrefs for your real links, or add/remove <a> icons. -->
-    <div class="socials">
-      <a href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-      <a href="mailto:rev.revathi65@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
-      <a href="#" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+</header>
+
+<main>
+
+  <!-- ============================================================
+       BANNER SECTION — bio on the left
+       ============================================================ -->
+  <section id="about" class="banner">
+    <div class="banner-content">
+      <div class="kicker">Hi, I'm Revathi 👋</div>
+      <!-- EDIT ME: headline -->
+      <h1>Turning raw data into dashboards people actually use.</h1>
+      <!-- EDIT ME: your bio paragraph -->
+      <p>
+        I'm a Data Analyst &amp; Power BI Developer, focused on transforming raw data into
+        meaningful insights and interactive dashboards. With expertise in Power BI, DAX,
+        data modeling, and data visualization, I create business intelligence solutions
+        that help organizations understand performance, identify trends, monitor KPIs, and
+        make data-driven decisions. The tools I use are Microsoft Power BI Desktop, and I'm
+        open to work for Power BI projects as a freelancer or remote (WFH).
+      </p>
+      <div class="banner-cta">
+        <a href="#projects" class="btn btn-accent">View my work</a>
+        <a href="#contact" class="btn">Get in touch</a>
+      </div>
     </div>
-  </header>
+  </section>
 
-  <main>
+  <!-- ============================================================
+       PROJECTS SECTION — 3-column card grid
+       ============================================================ -->
+  <section id="projects">
+    <h2 class="eyebrow-free-heading">Projects</h2>
+    <p>A selection of dashboards and analyses I've built. Swap in your own below.</p>
 
-    <!-- ===============================================================
-         BANNER SECTION — your bio
-         EDIT THIS: the heading and the paragraph text below it.
-         =============================================================== -->
-    <section id="banner">
-      <div class="banner-inner" id="about">
-        <div class="eyebrow-line"></div>
-        <!-- EDIT THIS: greeting heading -->
-        <h2>Hi, I'm Revathi.</h2>
-        <!-- EDIT THIS: your bio paragraph. Just replace the sentence
-             below with your own — keep it inside the <p> tags. -->
-        <p>
-          I'm a Data Analyst - Power BI Developer, focused on transforming raw data into
-          meaningful insights and interactive dashboards. With expertise in Power BI, DAX,
-          data modeling, and data visualization, I create business intelligence solutions
-          that help organizations understand performance, identify trends, monitor KPIs,
-          and make data-driven decisions. The tools I use are Microsoft Power BI Desktop,
-          and I'm open to work for Power BI projects as a freelancer or remote (WFH).
-        </p>
-        <div class="cta-row">
-          <a href="#projects" class="btn solid">View my projects</a>
-          <a href="#contact" class="btn outline">Get in touch</a>
+    <div class="projects-grid">
+
+      <!-- ==========================================================
+           ONE PROJECT CARD — this is the demo card.
+           To add MORE projects: select this whole block, from
+           <div class="project-card"> down to its matching </div>,
+           copy it, and paste it again right below. Then edit the
+           4 spots marked "EDIT ME" in your new copy. That's it —
+           the grid automatically re-flows to fit 1, 2, 3+ cards.
+           ========================================================== -->
+      <div class="project-card">
+        <!--
+          EDIT ME — PROJECT IMAGE:
+          Put your screenshot inside the images/ folder next to this
+          file (for example images/sales-dashboard.png), then change
+          the src="" below to that filename. Recommended size: a
+          landscape screenshot, roughly 800x500 pixels or similar
+          16:10 ratio, works best.
+          Right now this points to a placeholder image service so
+          the card looks correct before you add your own picture.
+        -->
+        <img class="thumb"
+             src="https://placehold.co/800x500/5D9C9A/ffffff?text=Project+Preview"
+             alt="Preview screenshot of the Sales Performance Dashboard project">
+        <div class="card-body">
+          <!-- EDIT ME — PROJECT TITLE -->
+          <h3>Sales Performance Dashboard</h3>
+          <!-- EDIT ME — PROJECT DESCRIPTION -->
+          <p>
+            An interactive Power BI dashboard tracking regional sales, revenue trends,
+            and KPI targets, built with DAX measures and a star-schema data model for
+            fast, reliable reporting.
+          </p>
+          <!-- EDIT ME — PROJECT LINK: change href="#" to the real
+               URL of your published report, GitHub repo, or case
+               study write-up. -->
+          <a href="#" class="btn btn-accent">View Project</a>
         </div>
       </div>
-    </section>
+      <!-- ===================== END OF ONE PROJECT CARD ===================== -->
 
-    <!-- ===============================================================
-         PROJECTS SECTION
-         This is the part you'll come back to most often. Read the
-         comments inside the first card carefully — every other card
-         is built the exact same way.
-         =============================================================== -->
-    <section id="projects" class="alt-bg">
-      <div class="section-heading">
-        <div class="eyebrow-line"></div>
-        <h2>Projects</h2>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       EXPERIENCE SECTION — typographic horizontal timeline
+       ============================================================ -->
+  <section id="experience">
+    <h2 class="eyebrow-free-heading">Experience</h2>
+
+    <div class="timeline">
+
+      <!-- ==========================================================
+           ONE EXPERIENCE ROW.
+           To add another row of experience: copy this whole
+           <div class="timeline-row">...</div> block, paste it
+           either above or below, and edit the 3 pieces of text
+           inside — the year range, the title, and the tools list.
+           ========================================================== -->
+      <div class="timeline-row">
+        <!-- EDIT ME: year range -->
+        <div class="timeline-year">2016–24</div>
+        <!-- EDIT ME: category / role title -->
+        <div class="timeline-title">Visual Design</div>
+        <!-- EDIT ME: tools/skills used, separated by " • " -->
+        <div class="timeline-tools">Figma • Photoshop • After Effects</div>
       </div>
 
-      <div class="projects-grid">
+      <div class="timeline-row">
+        <div class="timeline-year">2018–24</div>
+        <div class="timeline-title">Development</div>
+        <div class="timeline-tools">Webflow • HTML &amp; CSS</div>
+      </div>
+      <!-- ===================== add more rows above this line ===================== -->
 
-        <!-- =============================================================
-             ONE PROJECT CARD — copy this whole <article>...</article>
-             block to add another project. Paste the copy right below
-             this card (before the closing </div> of .projects-grid),
-             then edit the 4 spots marked "EDIT THIS" inside your new
-             copy. The grid automatically wraps to a new row every 3
-             cards, so you don't need to touch any CSS to add more.
-             ============================================================= -->
-        <article class="project-card">
+    </div>
+  </section>
 
-          <div class="thumb">
-            <!--
-              EDIT THIS — PROJECT IMAGE:
-              1) Put your screenshot/image file inside the "images" folder
-                 that came with this site (e.g. images/sales-dashboard.png).
-              2) Change the src below from the placeholder link to your
-                 own file path, like:  src="images/sales-dashboard.png"
-              3) Also update the "alt" text to describe the image —
-                 this helps screen readers and search engines.
-              Until you add your own image, this uses a free placeholder
-              image service so the card still looks complete.
-            -->
-            <img src="Order management.jpg"
-                 alt="Screenshot of Order management report project">
+  <!-- ============================================================
+       SKILLS SECTION — categorized, animated progress bars
+       ============================================================ -->
+  <section id="skills" class="section-alt">
+    <div class="section-inner">
+      <h2 class="eyebrow-free-heading">Skills</h2>
+      <p>Core analytical skills and the tools I use to apply them.</p>
+
+      <div class="skills-columns">
+
+        <!-- CATEGORY 1: Core skills -->
+        <div class="skills-category">
+          <div class="skills-cat-title">Core</div>
+
+          <!-- ==========================================================
+               ONE SKILL BAR.
+               To add another skill: copy this whole
+               <div class="skill-item">...</div> block and paste it
+               below. Then edit:
+                 1) the icon class (pick any from fontawesome.com/search)
+                 2) the skill name text
+                 3) the data-percent value (0–100) — this controls how
+                    far the bar fills when it scrolls into view
+                 4) the percent number shown next to the bar
+               ========================================================== -->
+          <div class="skill-item">
+            <div class="skill-label">
+              <span><i class="fa-solid fa-magnifying-glass-chart skill-icon"></i>Data Cleaning</span>
+              <span class="skill-pct">90%</span>
+            </div>
+            <div class="skill-bar-track">
+              <div class="skill-bar-fill" data-percent="90"></div>
+            </div>
           </div>
 
-          <div class="card-body">
-            <!-- EDIT THIS — PROJECT TITLE: replace the text between the h3 tags -->
-            <h3>Order Management Dashboard</h3>
+          <div class="skill-item">
+            <div class="skill-label">
+              <span><i class="fa-solid fa-chart-column skill-icon"></i>Data Visualization</span>
+              <span class="skill-pct">92%</span>
+            </div>
+            <div class="skill-bar-track">
+              <div class="skill-bar-fill" data-percent="92"></div>
+            </div>
+          </div>
+          <!-- ===================== add more Core skills above this line ===================== -->
+        </div>
 
-            <!-- EDIT THIS — PROJECT DESCRIPTION: replace the text between the p tags.
-                 Keep it to 2–3 short sentences so all cards line up neatly. -->
-            <p>
-              An interactive Power BI Order Management Dashboard for E-commerce analytics, 
-              covering Revenue, Total Orders, AOV, Return cancellation rate, Discount Rate, 
-              Payment modes, Categories, Status overview, Top 10 Brands, and AOV vs Discount Rate using
-              DAX measures and dynamic filters.
-            </p>
+        <!-- CATEGORY 2: Tools -->
+        <div class="skills-category">
+          <div class="skills-cat-title">Tools</div>
 
-            <!-- EDIT THIS — PROJECT LINK: replace the "#" below with a link to
-                 your live dashboard, PDF report, GitHub repo, or portfolio page.
-                 If you don't have a link yet, you can leave it as "#" for now. -->
-            <a href="#" class="btn solid" target="_blank" rel="noopener">View Project</a>
+          <div class="skill-item">
+            <div class="skill-label">
+              <span><i class="fa-solid fa-database skill-icon"></i>SQL</span>
+              <span class="skill-pct">85%</span>
+            </div>
+            <div class="skill-bar-track">
+              <div class="skill-bar-fill" data-percent="85"></div>
+            </div>
           </div>
-        </article>
-        <!-- ============== END OF THE COPY-ABLE PROJECT CARD ============== -->
 
-        <!-- Below are two more example cards, built the same way as above,
-             just so the 3-column grid looks complete out of the box.
-             Edit their image / title / description / link the same way. -->
-        <article class="project-card">
-          <div class="thumb">
-            <img src="https://placehold.co/600x450/5D9C9A/ffffff?text=Project+Screenshot"
-                 alt="Screenshot of the HR analytics dashboard project">
+          <div class="skill-item">
+            <div class="skill-label">
+              <span><i class="fa-solid fa-chart-line skill-icon"></i>Power BI</span>
+              <span class="skill-pct">95%</span>
+            </div>
+            <div class="skill-bar-track">
+              <div class="skill-bar-fill" data-percent="95"></div>
+            </div>
           </div>
-          <div class="card-body">
-            <h3>HR Analytics Dashboard</h3>
-            <p>
-              A Power BI report analysing employee attrition, headcount trends, and
-              department-wise KPIs to support data-driven HR decisions.
-            </p>
-            <a href="#" class="btn solid" target="_blank" rel="noopener">View Project</a>
-          </div>
-        </article>
-
-        <article class="project-card">
-          <div class="thumb">
-            <img src="https://placehold.co/600x450/5D9C9A/ffffff?text=Project+Screenshot"
-                 alt="Screenshot of the finance KPI tracker project">
-          </div>
-          <div class="card-body">
-            <h3>Finance KPI Tracker</h3>
-            <p>
-              A dashboard consolidating revenue, expenses, and profit margins with
-              drill-through pages built using Power Query and DAX.
-            </p>
-            <a href="#" class="btn solid" target="_blank" rel="noopener">View Project</a>
-          </div>
-        </article>
+          <!-- ===================== add more Tools skills above this line ===================== -->
+        </div>
 
       </div>
-    </section>
+    </div>
+  </section>
 
-     <!-- ===============================================================
-         SKILLS SECTION
-         EDIT THIS: your skills.
-         =============================================================== -->
+  <!-- ============================================================
+       RESUME SECTION
+       ============================================================ -->
+  <section id="resume">
+    <h2 class="eyebrow-free-heading">Resume</h2>
+    <div class="resume-box">
+      <p>Want the full picture — work history, education, and tools? Grab a copy of my resume as a PDF.</p>
+      <!--
+        EDIT ME — RESUME FILE:
+        1. Put your resume PDF inside the images/ folder (or make a
+           new folder such as files/) next to this index.html file.
+        2. Change href="images/resume.pdf" below to match its filename.
+        3. The download="..." attribute sets the filename people will
+           see when it saves to their computer — change it to your name.
+      -->
+      <a class="btn-download" href="images/resume.pdf" download="Revathi-Resume.pdf">
+        <i class="fa-solid fa-download"></i>
+        Download Resume
+      </a>
+    </div>
+  </section>
 
-    <!-- SKILLS -->
-  <div class="wrap">
+  <!-- ============================================================
+       CONTACT SECTION
+       ============================================================ -->
+  <section id="contact" class="section-alt">
+    <div class="section-inner">
+      <h2 class="eyebrow-free-heading">Contact</h2>
+      <p>Open to freelance and remote Power BI projects — feel free to reach out.</p>
 
-  <h2 class="section-title">Skills</h2>
-  <p class="section-sub">A mix of core analytical skills and the tools I use to apply them.</p>
+      <div class="contact-grid">
 
-  <div class="skills-tabs" role="tablist">
-    <button class="tab-btn active" data-filter="all" role="tab">All</button>
-    <button class="tab-btn" data-filter="core" role="tab">Core</button>
-    <button class="tab-btn" data-filter="tools" role="tab">Tools</button>
-  </div>
+        <!-- EDIT ME: email address. This link opens the visitor's
+             default mail app with your address pre-filled. -->
+        <a class="contact-card" href="mailto:rev.revathi65@gmail.com" aria-label="Send an email">
+          <span class="icon-circle"><i class="fa-solid fa-envelope"></i></span>
+          <span>
+            <span class="contact-label" style="display:block;">Email</span>
+            <span class="contact-value">rev.revathi65@gmail.com</span>
+          </span>
+        </a>
 
-  <div class="skills-grid" id="skillsGrid">
+        <!-- EDIT ME: LinkedIn profile URL -->
+        <a class="contact-card" href="https://www.linkedin.com/in/your-profile" target="_blank" rel="noopener noreferrer" aria-label="Visit LinkedIn profile">
+          <span class="icon-circle"><i class="fa-brands fa-linkedin"></i></span>
+          <span>
+            <span class="contact-label" style="display:block;">LinkedIn</span>
+            <span class="contact-value">Connect with me</span>
+          </span>
+        </a>
 
-    <article class="skill-card visible" data-category="core" data-level="92">
-      <div class="skill-head">
-        <div class="skill-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#c9601a" stroke-width="1.8">
-            <ellipse cx="12" cy="5" rx="8" ry="3"/>
-            <path d="M4 5v6c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/>
-            <path d="M4 11v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/>
-          </svg>
+        <!-- EDIT ME: YouTube channel URL -->
+        <a class="contact-card" href="https://www.youtube.com/@your-channel" target="_blank" rel="noopener noreferrer" aria-label="Visit YouTube channel">
+          <span class="icon-circle"><i class="fa-brands fa-youtube"></i></span>
+          <span>
+            <span class="contact-label" style="display:block;">YouTube</span>
+            <span class="contact-value">Watch my videos</span>
+          </span>
+        </a>
+
+        <!-- EDIT ME: location text -->
+        <div class="contact-card" aria-label="Location">
+          <span class="icon-circle"><i class="fa-solid fa-location-dot"></i></span>
+          <span>
+            <span class="contact-label" style="display:block;">Location</span>
+            <span class="contact-value">Vellore, Tamil Nadu, India</span>
+          </span>
         </div>
-        <div>
-          <div class="skill-name">SQL</div>
-          <div class="skill-category">Core skill</div>
-        </div>
+
       </div>
-      <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
-      <div class="skill-level"><span>Querying & joins</span><span class="skill-percent">92%</span></div>
-    </article>
+    </div>
+  </section>
 
-    <article class="skill-card visible" data-category="core" data-level="88">
-      <div class="skill-head">
-        <div class="skill-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#c9601a" stroke-width="1.8">
-            <path d="M4 4v16h16"/>
-            <path d="M8 15l3-4 3 3 4-6"/>
-          </svg>
-        </div>
-        <div>
-          <div class="skill-name">Data Visualization</div>
-          <div class="skill-category">Core skill</div>
-        </div>
-      </div>
-      <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
-      <div class="skill-level"><span>Charts & storytelling</span><span class="skill-percent">88%</span></div>
-    </article>
+</main>
 
-    <article class="skill-card visible" data-category="core" data-level="85">
-      <div class="skill-head">
-        <div class="skill-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#c9601a" stroke-width="1.8">
-            <path d="M5 5h14l-5 7v6l-4 2v-8z"/>
-          </svg>
-        </div>
-        <div>
-          <div class="skill-name">Data Cleaning</div>
-          <div class="skill-category">Core skill</div>
-        </div>
-      </div>
-      <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
-      <div class="skill-level"><span>Validation & transforms</span><span class="skill-percent">85%</span></div>
-    </article>
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer>
+  <!-- EDIT ME: change the name / year if needed. The year updates
+       itself automatically via the small script below. -->
+  &copy; <span id="year"></span> Revathi. All rights reserved.
+</footer>
 
-    <article class="skill-card visible" data-category="tools" data-level="90">
-      <div class="skill-head">
-        <div class="skill-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#c9601a" stroke-width="1.8">
-            <rect x="4" y="10" width="3.5" height="10"/>
-            <rect x="10.5" y="6" width="3.5" height="14"/>
-            <rect x="17" y="3" width="3.5" height="17"/>
-          </svg>
-        </div>
-        <div>
-          <div class="skill-name">Power BI</div>
-          <div class="skill-category">Tool</div>
-        </div>
-      </div>
-      <div class="skill-bar-track"><div class="skill-bar-fill"></div></div>
-      <div class="skill-level"><span>Dashboards & reports</span><span class="skill-percent">90%</span></div>
-    </article>
-
-  </div>
-</div>
-
+<!-- ============================================================
+     JAVASCRIPT — small helpers, nothing to edit here
+     ============================================================ -->
 <script>
-  const cards = document.querySelectorAll('.skill-card');
-
-  // Animate bars into view on load/scroll
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const fill = entry.target.querySelector('.skill-bar-fill');
-        const level = entry.target.getAttribute('data-level');
-        fill.style.width = level + '%';
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.3 });
-
-  cards.forEach(card => observer.observe(card));
-
-  // Category filter tabs
-  const tabs = document.querySelectorAll('.tab-btn');
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      const filter = tab.getAttribute('data-filter');
-
-      cards.forEach(card => {
-        const match = filter === 'all' || card.getAttribute('data-category') === filter;
-        card.classList.toggle('visible', match);
-        if (match) {
-          const fill = card.querySelector('.skill-bar-fill');
-          const level = card.getAttribute('data-level');
-          fill.style.width = '0%';
-          requestAnimationFrame(() => {
-            setTimeout(() => { fill.style.width = level + '%'; }, 30);
-          });
-        }
-      });
-    });
-  });
-</script>
-
-    <!-- ===============================================================
-         CONTACT SECTION
-         EDIT THIS: your email, LinkedIn URL, and location.
-         =============================================================== -->
-    <section id="contact">
-      <div class="section-heading">
-        <div class="eyebrow-line"></div>
-        <h2>Contact</h2>
-      </div>
-
-      <ul class="contact-list">
-        <li>
-          <i class="fa-solid fa-envelope"></i>
-          <!-- EDIT THIS: your email address (appears twice below — in the
-               visible text and in the mailto: link — keep both matching) -->
-          <a href="mailto:rev.revathi65@gmail.com">rev.revathi65@gmail.com</a>
-        </li>
-        <li>
-          <i class="fa-brands fa-linkedin-in"></i>
-          <!-- EDIT THIS: replace the href with your real LinkedIn profile URL -->
-          <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn Profile</a>
-        </li>
-        <li>
-          <i class="fa-solid fa-location-dot"></i>
-          <!-- EDIT THIS: your location -->
-          <span>Vellore, Tamil Nadu, India</span>
-        </li>
-      </ul>
-    </section>
-
-  </main>
-
-  <!-- =================================================================
-       FOOTER
-       EDIT THIS: the name in the copyright line, if needed.
-       ================================================================= -->
-  <footer id="footer">
-    <p>&copy; <span id="year"></span> Revathi. All rights reserved.</p>
-  </footer>
-
-</div><!-- /#main-wrapper -->
-
-<script>
-  /* =====================================================================
-     JAVASCRIPT
-     You shouldn't need to edit anything below this line — it just
-     handles the mobile menu opening/closing and a small convenience
-     for the footer year. It's commented in case you're curious how
-     it works.
-     ===================================================================== */
-
-  // Automatically show the current year in the footer copyright line,
-  // so you never have to update it by hand.
+  // 1) Auto-fill the current year in the footer copyright line.
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // Mobile menu: open the sidebar when the hamburger button is clicked.
+  // 2) Mobile sidebar: toggle open/closed when the hamburger button is tapped.
+  var toggleBtn = document.getElementById('sidebarToggle');
   var sidebar   = document.getElementById('sidebar');
-  var overlay   = document.getElementById('sidebar-overlay');
-  var openBtn   = document.getElementById('menu-toggle');
-  var closeBtn  = document.getElementById('sidebar-close');
-
-  function openMenu(){
-    sidebar.classList.add('open');
-    overlay.classList.add('show');
-  }
-  function closeMenu(){
-    sidebar.classList.remove('open');
-    overlay.classList.remove('show');
-  }
-
-  openBtn.addEventListener('click', openMenu);
-  closeBtn.addEventListener('click', closeMenu);
-  overlay.addEventListener('click', closeMenu);
-
-  // Close the mobile menu automatically after tapping a nav link,
-  // so the menu doesn't stay open over the section you just jumped to.
-  var navLinks = sidebar.querySelectorAll('nav a');
-  navLinks.forEach(function(link){
-    link.addEventListener('click', closeMenu);
+  toggleBtn.addEventListener('click', function () {
+    var isOpen = sidebar.classList.toggle('open');
+    toggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
   });
+  // Close the mobile sidebar automatically after tapping a nav link.
+  document.querySelectorAll('.sidebar nav a').forEach(function (link) {
+    link.addEventListener('click', function () {
+      sidebar.classList.remove('open');
+      toggleBtn.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // 3) Highlight the current section's nav link as you scroll
+  //    (adds/removes the "active" class used in the CSS above).
+  var sections = document.querySelectorAll('main section[id]');
+  var navLinks = document.querySelectorAll('.sidebar nav a');
+  function setActiveLink() {
+    var scrollPos = window.scrollY + 120;
+    sections.forEach(function (section) {
+      if (scrollPos >= section.offsetTop && scrollPos < section.offsetTop + section.offsetHeight) {
+        navLinks.forEach(function (link) { link.classList.remove('active'); });
+        var match = document.querySelector('.sidebar nav a[href="#' + section.id + '"]');
+        if (match) match.classList.add('active');
+      }
+    });
+  }
+  window.addEventListener('scroll', setActiveLink);
+  setActiveLink();
+
+  // 4) Animate the skill bars from 0% up to their target width, but
+  //    only once each bar actually scrolls into view (nicer than
+  //    animating them immediately on page load, off-screen).
+  var skillBars = document.querySelectorAll('.skill-bar-fill');
+  var barObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        var target = entry.target.getAttribute('data-percent') || 0;
+        entry.target.style.width = target + '%';
+        barObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  skillBars.forEach(function (bar) { barObserver.observe(bar); });
 </script>
 
 </body>
